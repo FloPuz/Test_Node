@@ -10,7 +10,6 @@ router.post('/', async (req, res) => {
     try {
         const email = req.body.email;
         const password  = req.body.password;
-        console.log(email, password);
         if (!email || !password) {
             return res.status(400).json({ message: "Email et mot de passe requis" });
         }
@@ -29,7 +28,7 @@ router.post('/', async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ message: "Identifiants invalides" });
         }
-
+            
         // Générer un token JWT 
         let token = "notyetdefined"
         //const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });

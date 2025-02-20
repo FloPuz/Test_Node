@@ -23,7 +23,7 @@ try {
 module.exports.getUserById = async (id) => {
     try {
         let user = await User.findById(id);
-        return users;
+        return user;
     } catch (e) {
         throw Error('Error while query user with id ' + id); 
     }
