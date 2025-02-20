@@ -22,7 +22,8 @@ try {
 
 module.exports.getUserById = async (id) => {
     try {
-        let user = await User.findById(id);
+        let user = await User.findById(id).populate('tasks');
+        console.log(user.tasks);
         return user;
     } catch (e) {
         throw Error('Error while query user with id ' + id); 
