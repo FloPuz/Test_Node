@@ -1,4 +1,5 @@
 const express = require('express')
+const bcrypt = require('bcrypt')
 const router = express.Router()
 const User = require('../models/user')
 const UserService = require('../services/userApiService')
@@ -20,12 +21,23 @@ router.get('/:id', getUser, (req, res) => {
 
 // Create one user
 router.post('/', async (req, res) => {
-    const user = new User({
-        name: req.body.name,
-        email: req.body.email
+    let secretKey = process.env.SECRET_KEY;
+
+    let passwordWithSecret = req.body.password + secretKey;
+
+    // Hachage du mot de passe renforcé
+    let saltRounds = 10;
+    let hashedPassword = await bcrypt.hash(passwordWithSecret, saltRounds);
+    console.log(req.body)
+    let user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: hashedPassword
+
     })
     try {
-        const newUser = await UserService.createUser(user)
+        const newUser = await UserService.addUser(user)
         res.status(201).json(newUser)
     } catch (err) {
         res.status(400).json({ message: err.message })
