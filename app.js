@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const User = require('./models/user')
 const UserService = require('./services/userApiService')
 const userApiRoute = require('./routes/userApiRoute')
+const loginUserApiRoute = require('./routes/loginUserApiRoute')
 const app = express()
 const port = 8081
 
@@ -36,6 +37,7 @@ console.log(alluser.length)
 //Les supplémentaire
 
 app.use('/users', userApiRoute)
+app.use('/login', loginUserApiRoute)
 
 
 app.get('/', (req, res) => {
